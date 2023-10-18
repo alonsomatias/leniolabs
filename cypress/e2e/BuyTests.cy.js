@@ -14,7 +14,7 @@ describe('Buy Testing', () => {
   })
   
   itParam('Buy using ${value.username}' , users, (userData) => {
-    LoginPage.Login(userData.username, "secret_sauce");
+    LoginPage.Login(userData.username, userData.password);
     HomePage.PageIsDisplayed();
     HomePage.AddToCart(itemsToBuy)
     HomePage.GoToCart()
@@ -23,5 +23,10 @@ describe('Buy Testing', () => {
     cy.fixture('formData').then((userJson) => {
       FormPage.FillForm(userJson)
     })
+  })
+
+  it('Locked user Login', () => {
+    LoginPage.Login('locked_out_user', 'secret_sauce');
+    LoginPage.ValidateErrorMessage('Sorry, this user has been locked out.')
   })
 })
